@@ -46,8 +46,20 @@ function onFeedbackFormSubmit(event) {
   feedbackFormState.email = feedbackForm.email.value;
   feedbackFormState.message = feedbackForm.message.value;
 
-  console.log(`Feedback Form Submit: ${JSON.stringify(feedbackFormState)}`);
+  if (
+    isWhitespacesOrEmpty(feedbackFormState.email) ||
+    isWhitespacesOrEmpty(feedbackFormState.message)
+  ) {
+    return;
+  }
+
+  console.dir(feedbackFormState);
 
   localStorage.removeItem(LS_FEEDBACK_FORM_STATE_KEY);
   feedbackForm.reset();
+}
+
+function isWhitespacesOrEmpty(input) {
+  const regexPattern = /[^ \t\r\n\v\f]/;
+  return !regexPattern.test(input);
 }
